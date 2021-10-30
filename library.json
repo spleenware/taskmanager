@@ -1,0 +1,31 @@
+{
+  "name": "TaskManager",
+  "version": "1.0.0",
+  "description": "A simple cooperative task manager, with message pool management",
+  "keywords": "task, scheduler, message pool, message queue",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/spleenware/taskmanager.git"
+  },
+  "authors":
+  [
+    {
+      "name": "Scott Powell",
+      "email": "admin@spleenware.com",
+      "url": "https://spleenware.wordpress.com",
+      "maintainer": true
+    }
+  ],
+  "export": {
+    "exclude":
+    [
+        "test/*"
+    ]
+  },
+  "license": "MIT",
+  "dependencies": {
+  },
+  "frameworks": ["Arduino"],
+  "platforms": "*"
+}
