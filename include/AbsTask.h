@@ -21,3 +21,4 @@ class AbsTask {
     unsigned long next_millis;
 };
 
+extern bool millisHasNowPassed(unsigned long timestamp);

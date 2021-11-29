@@ -32,6 +32,11 @@ void TaskManager::logTo(Stream& stream) {
   logStream = &stream;
 }
 
+// make use of 2's complement arithmetic to handle timestamps wrapping back to zero
+static long timeDiff(unsigned long left, unsigned long right)  {
+  return (long)(left - right);
+}
+
 void TaskManager::quickSort(AbsTask* arr[], int left, int right) {
      int i = left, j = right;
      AbsTask* tmp;
@@ -39,9 +44,9 @@ void TaskManager::quickSort(AbsTask* arr[], int left, int right) {
 
      /* partition */
      while (i <= j) {
-           while (arr[i]->next_millis < pivot)
+           while (timeDiff(arr[i]->next_millis, pivot) < 0)
                  i++;
-           while (arr[j]->next_millis > pivot)
+           while (timeDiff(arr[j]->next_millis, pivot) > 0)
                  j--;
            if (i <= j) {
                  tmp = arr[i];
@@ -74,7 +79,7 @@ void TaskManager::loop() {
     if (num > 1) quickSort(tasks, 0, num - 1);
 
     if (num > 0) {
-      long diff = tasks[0]->next_millis - millis();
+      long diff = timeDiff(tasks[0]->next_millis, millis());
       if (diff > 0) {
         if (logStream) {
           logStream->print("sleeping for ");
@@ -88,7 +93,7 @@ void TaskManager::loop() {
  
   if (next < num) {
     AbsTask* t = tasks[next];
-    if (millis() < t->next_millis) {
+    if (timeDiff(millis(), t->next_millis) < 0) {
       // not enough delay time has passed
       next++;
     } else {
@@ -102,7 +107,7 @@ void TaskManager::loop() {
 
       if (logStream) {
         logStream->print(" (");
-        logStream->print(millis() - start);
+        logStream->print(timeDiff(millis(), start));
         logStream->println(" millis)");
       }
 
