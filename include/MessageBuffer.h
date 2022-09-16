@@ -15,5 +15,6 @@ class MessageBuffer {
     uint8_t *buf;
     uint8_t len;
     uint8_t from_to;
+    uint8_t flags;
     uint32_t extra;
 };
