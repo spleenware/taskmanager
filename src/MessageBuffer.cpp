@@ -6,6 +6,7 @@ MessageBuffer::MessageBuffer() {
   len = 0;
   next = NULL;
   extra = 0;
+  flags = 0;
 }
 
 void MessageBuffer::copyData(uint8_t *src, uint8_t _len, uint8_t other) {
