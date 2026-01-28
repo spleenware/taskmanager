@@ -5,6 +5,7 @@ TaskManager::TaskManager() {
   num = 0;
   next = 0;
   logStream = NULL;
+  custom_sleep = NULL;
 
   int i;
   for (i = 0; i < MAX_TASKS; i++) { tasks[i] = NULL; }
@@ -86,7 +87,12 @@ void TaskManager::loop() {
           logStream->print(diff);
           logStream->println(" millis");
         }
-        delay(diff);
+
+        if (custom_sleep) {
+          custom_sleep(diff);
+        } else {
+          delay(diff);
+        }
       }
     }
   }
